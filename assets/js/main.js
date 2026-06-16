@@ -101,7 +101,7 @@
   var baData = {
     sourcils: { caption: "Sourcils — effet naturel, dense et structuré", after: "assets/img/brows-after.jpg", before: "assets/img/brows-before.jpg" },
     eyeliner: { caption: "Eyeliner — un regard défini et intensifié", after: "assets/img/eyeliner-after.jpg", before: "assets/img/eyeliner-before.jpg" },
-    levres: { caption: "Lèvres aquarelle — bouche fraîche et repulpée", after: "assets/img/lips.jpg", before: null }
+    levres: { caption: "Lèvres aquarelle — bouche fraîche, repulpée et uniforme", after: "assets/img/lips-after.jpg", before: "assets/img/lips-before.jpg" }
   };
 
   function setPos(pct) {
