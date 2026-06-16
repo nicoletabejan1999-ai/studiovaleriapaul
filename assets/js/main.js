@@ -145,23 +145,31 @@
 
   /* ---------- Onglets Avant / Après ---------- */
   var tabs = document.querySelectorAll(".ba-tab");
+
+  function applyBa(key) {
+    var data = baData[key];
+    if (!data) return;
+    if (captionEl) captionEl.textContent = data.caption;
+    // Bascule les images via variables CSS si disponibles
+    var root = getComputedStyle(document.documentElement);
+    var afterVar = root.getPropertyValue(data.after);
+    var beforeVar = root.getPropertyValue(data.before);
+    if (afterEl) afterEl.style.backgroundImage = afterVar && afterVar.trim() ? afterVar : "";
+    if (beforeEl) beforeEl.style.backgroundImage = beforeVar && beforeVar.trim() ? beforeVar : "";
+    setPos(50);
+  }
+
   tabs.forEach(function (tab) {
     tab.addEventListener("click", function () {
       tabs.forEach(function (t) { t.classList.remove("is-active"); });
       tab.classList.add("is-active");
-      var key = tab.getAttribute("data-ba");
-      var data = baData[key];
-      if (!data) return;
-      if (captionEl) captionEl.textContent = data.caption;
-      // Bascule les images via variables CSS si disponibles
-      var root = getComputedStyle(document.documentElement);
-      var afterVar = root.getPropertyValue(data.after);
-      var beforeVar = root.getPropertyValue(data.before);
-      if (afterEl) afterEl.style.backgroundImage = afterVar && afterVar.trim() ? afterVar : "";
-      if (beforeEl) beforeEl.style.backgroundImage = beforeVar && beforeVar.trim() ? beforeVar : "";
-      setPos(50);
+      applyBa(tab.getAttribute("data-ba"));
     });
   });
+
+  // Initialise le comparateur avec l'onglet actif au chargement
+  var activeTab = document.querySelector(".ba-tab.is-active") || tabs[0];
+  if (activeTab) applyBa(activeTab.getAttribute("data-ba"));
 
   /* ---------- Carrousel témoignages ---------- */
   var track = document.getElementById("testiTrack");

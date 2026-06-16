@@ -32,8 +32,8 @@
      Les emplacements sans photo affichent un dégradé élégant de la charte. */
   --hero-img: url("../img/hero-portrait.png");
   --lips-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/lips.png");
-  /* --brows-img: url("../img/brows.png"); */
-  /* --liner-img: url("../img/eyeliner.png"); */
+  --brows-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/brows.png");
+  --liner-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/eyeliner.png");
   /* --about-img: url("../img/studio.png"); */
 }
 
