@@ -30,10 +30,10 @@
   /* ---- Photos (remplaçables par les vraies photos du studio) ----
      Déposez vos images dans assets/img/ puis mettez à jour ces variables.
      Les emplacements sans photo affichent un dégradé élégant de la charte. */
-  --hero-img: url("../img/hero-portrait.png");
-  --lips-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/lips.png");
-  --brows-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/brows.png");
-  --liner-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/eyeliner.png");
+  --hero-img: url("../img/hero-portrait.jpg");
+  --lips-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/lips.jpg");
+  --brows-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/brows.jpg");
+  --liner-img: linear-gradient(0deg, rgba(44,38,34,0.05), rgba(44,38,34,0.05)), url("../img/eyeliner.jpg");
   /* --about-img: url("../img/studio.png"); */
 }
 
@@ -376,14 +376,13 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 /* ---------- About ---------- */
 .about__inner { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
 .about__visual { position: relative; }
-/* Portrait de la fondatrice : photo source déjà circulaire, recadrée dans un cadre rond */
+/* Portrait de la fondatrice Valéria Paul */
 .about__photo {
-  aspect-ratio: 1; border-radius: 50%; box-shadow: var(--shadow-md);
-  background-image: url("../img/founder.jpeg");
+  aspect-ratio: 3/4; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+  background-image: url("../img/founder.jpg");
   background-repeat: no-repeat;
-  background-size: 184%;
-  background-position: 52% 57%;
-  border: 8px solid var(--white);
+  background-size: cover;
+  background-position: 50% 22%;
 }
 .about__caption {
   text-align: center; margin-top: 1.4rem;
@@ -391,7 +390,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 .about__caption strong { display: block; font-family: var(--serif); font-size: 1.5rem; color: var(--ink); }
 .about__caption span { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
 .about__stamp {
-  position: absolute; top: 0.5rem; right: 0.5rem;
+  position: absolute; top: -1.3rem; right: -1.3rem;
   width: 108px; height: 108px; border-radius: 50%;
   background: var(--ink); color: var(--ivory); display: grid; place-content: center; text-align: center;
   box-shadow: var(--shadow-md); rotate: -8deg;
