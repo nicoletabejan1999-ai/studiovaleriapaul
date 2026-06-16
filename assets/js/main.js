@@ -173,13 +173,15 @@
   var videoPlayer = document.getElementById("videoPlayer");
   var videoPlayBtn = document.getElementById("videoPlayBtn");
   if (reviewVideo && videoPlayer && videoPlayBtn) {
-    videoPlayBtn.addEventListener("click", function () {
-      reviewVideo.play();
-      reviewVideo.setAttribute("controls", "controls");
-    });
+    function toggleVideo() {
+      if (reviewVideo.paused) { reviewVideo.play(); }
+      else { reviewVideo.pause(); }
+    }
+    videoPlayBtn.addEventListener("click", function (e) { e.stopPropagation(); toggleVideo(); });
+    videoPlayer.addEventListener("click", toggleVideo);
     reviewVideo.addEventListener("play", function () { videoPlayer.classList.add("is-playing"); });
     reviewVideo.addEventListener("pause", function () { videoPlayer.classList.remove("is-playing"); });
-    reviewVideo.addEventListener("ended", function () { videoPlayer.classList.remove("is-playing"); });
+    reviewVideo.addEventListener("ended", function () { videoPlayer.classList.remove("is-playing"); reviewVideo.currentTime = 0; });
   }
 
   /* ---------- Carrousel témoignages ---------- */

@@ -396,20 +396,23 @@
         </header>
 
         <figure class="video-review reveal" data-reveal>
-          <div class="video-review__player" id="videoPlayer">
-            <video id="reviewVideo" class="video-review__video" controls playsinline preload="none"
-                   poster="assets/img/brows-after.jpg">
-              <source src="assets/video/temoignage-sourcils.mp4" type="video/mp4" />
-              Votre navigateur ne prend pas en charge la lecture vidéo.
-            </video>
-            <button class="video-review__play" id="videoPlayBtn" aria-label="Lire le témoignage vidéo">
-              <span>▶</span>
-            </button>
+          <div class="iphone">
+            <div class="iphone__screen video-review__player" id="videoPlayer">
+              <video id="reviewVideo" class="video-review__video" playsinline preload="metadata"
+                     poster="assets/img/video-poster.jpg">
+                <source src="assets/video/temoignage-sourcils.mp4" type="video/mp4" />
+                Votre navigateur ne prend pas en charge la lecture vidéo.
+              </video>
+              <button class="video-review__play" id="videoPlayBtn" aria-label="Lire le témoignage vidéo">
+                <span>▶</span>
+              </button>
+            </div>
           </div>
           <figcaption class="video-review__text">
             <span class="video-review__badge">Le PMU, aussi pour les hommes</span>
-            <blockquote>« Je pensais que c'était réservé aux femmes… mes sourcils sont plus fournis et parfaitement naturels, personne ne se doute de rien. Accueil au top, je recommande à tous les hommes. »</blockquote>
-            <span class="video-review__author"><strong>Maxime R.</strong> · PMU Sourcils</span>
+            <blockquote>« Le retour de notre client »</blockquote>
+            <p class="video-review__desc">Découvrez en vidéo le témoignage de l'un de nos clients après sa séance de PMU sourcils&nbsp;: un résultat plus fourni, naturel et parfaitement masculin. Le maquillage permanent s'adresse à toutes et à tous.</p>
+            <span class="video-review__author">Témoignage client · PMU Sourcils</span>
           </figcaption>
         </figure>
 
