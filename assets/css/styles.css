@@ -419,16 +419,28 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
   align-items: center; max-width: 1000px; margin: 0 auto clamp(2.5rem, 5vw, 4rem);
   background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);
 }
-/* iPhone doré */
+/* iPhone doré — finition champagne réaliste */
 .iphone {
-  position: relative; width: 100%; max-width: 290px; margin: 0 auto;
-  aspect-ratio: 9 / 19.5; border-radius: 46px; padding: 11px;
-  background: linear-gradient(135deg, #e7c884 0%, #c69b48 22%, #f7e7ab 48%, #b9883c 74%, #e7c884 100%);
-  box-shadow: 0 34px 70px rgba(44,38,34,0.34), inset 0 0 0 2px rgba(255,255,255,0.28);
+  position: relative; width: 100%; max-width: 286px; margin: 0 auto;
+  border-radius: 48px; padding: 12px;
+  background:
+    linear-gradient(135deg, #e9d8b2 0%, #c1a877 15%, #efe4c6 33%, #b59a6b 50%, #d7c498 68%, #ab9263 85%, #e4d4ac 100%);
+  box-shadow:
+    0 34px 70px rgba(44,38,34,0.34),
+    inset 0 1px 1px rgba(255,255,255,0.6),
+    inset 0 -2px 3px rgba(0,0,0,0.2);
 }
+/* boutons latéraux */
+.iphone::before, .iphone::after {
+  content: ""; position: absolute; width: 3px; border-radius: 3px;
+  background: linear-gradient(180deg, #d8c59c, #a88f60);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+.iphone::before { left: -2px; top: 19%; height: 15%; }   /* volume */
+.iphone::after { right: -2px; top: 26%; height: 9%; }     /* veille */
 .iphone__screen {
-  position: relative; width: 100%; height: 100%; border-radius: 36px; overflow: hidden;
-  background: #0c0c0e; cursor: pointer;
+  position: relative; width: 100%; aspect-ratio: 592 / 1280; border-radius: 37px; overflow: hidden;
+  background: #0c0c0e; cursor: pointer; box-shadow: inset 0 0 0 2px #100f12;
 }
 .video-review__video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
