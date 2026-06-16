@@ -97,10 +97,11 @@
   var captionEl = document.getElementById("baCaption");
   var afterEl = document.getElementById("baAfter");
 
+  // Chemins relatifs au document (index.html à la racine)
   var baData = {
-    sourcils: { caption: "Sourcils poudrés — effet naturel et structuré", after: "--brows-img", before: "--brows-before" },
-    eyeliner: { caption: "Eyeliner — un regard défini et intensifié", after: "--liner-img", before: "--liner-before" },
-    levres: { caption: "Lèvres aquarelle — bouche fraîche et repulpée", after: "--lips-img", before: "--lips-before" }
+    sourcils: { caption: "Sourcils — effet naturel, dense et structuré", after: "assets/img/brows-after.jpg", before: "assets/img/brows-before.jpg" },
+    eyeliner: { caption: "Eyeliner — un regard défini et intensifié", after: "assets/img/eyeliner-after.jpg", before: "assets/img/eyeliner-before.jpg" },
+    levres: { caption: "Lèvres aquarelle — bouche fraîche et repulpée", after: "assets/img/lips.jpg", before: null }
   };
 
   function setPos(pct) {
@@ -150,12 +151,8 @@
     var data = baData[key];
     if (!data) return;
     if (captionEl) captionEl.textContent = data.caption;
-    // Bascule les images via variables CSS si disponibles
-    var root = getComputedStyle(document.documentElement);
-    var afterVar = root.getPropertyValue(data.after);
-    var beforeVar = root.getPropertyValue(data.before);
-    if (afterEl) afterEl.style.backgroundImage = afterVar && afterVar.trim() ? afterVar : "";
-    if (beforeEl) beforeEl.style.backgroundImage = beforeVar && beforeVar.trim() ? beforeVar : "";
+    if (afterEl) afterEl.style.backgroundImage = data.after ? "url('" + data.after + "')" : "";
+    if (beforeEl) beforeEl.style.backgroundImage = data.before ? "url('" + data.before + "')" : "";
     setPos(50);
   }
 
