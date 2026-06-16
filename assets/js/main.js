@@ -64,13 +64,18 @@
     var target = parseFloat(el.getAttribute("data-count"));
     var decimals = parseInt(el.getAttribute("data-decimals") || "0", 10);
     var suffix = el.getAttribute("data-suffix") || "";
+    var plain = el.hasAttribute("data-plain") || target >= 1000; // pas de séparateur (années)
     var dur = 1600, start = null;
+    function fmt(v) {
+      if (decimals) return v.toFixed(decimals);
+      v = Math.round(v);
+      return plain ? String(v) : v.toLocaleString("fr-FR");
+    }
     function step(ts) {
       if (!start) start = ts;
       var p = Math.min((ts - start) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
-      var val = target * eased;
-      el.textContent = (decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString("fr-FR")) + suffix;
+      el.textContent = fmt(target * eased) + suffix;
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
