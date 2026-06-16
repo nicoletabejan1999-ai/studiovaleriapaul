@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FAF6F1" />
+  <title>Studio Valeria Paul — Maquillage Permanent d'Exception</title>
+  <meta name="description" content="Studio de maquillage permanent (sourcils, eyeliner, lèvres). Des résultats naturels, durables et sur-mesure. Réservez votre consultation personnalisée." />
+  <meta name="author" content="Studio Valeria Paul" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Studio Valeria Paul — Maquillage Permanent d'Exception" />
+  <meta property="og:description" content="Sourcils, eyeliner et lèvres en maquillage permanent. Un résultat naturel, durable et personnalisé. Réservez votre consultation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='serif'%3EV%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <!-- Decorative grain / progress -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#hero" class="nav__brand" aria-label="Studio Valeria Paul — accueil">
+        <span class="nav__brand-mark">VP</span>
+        <span class="nav__brand-text">Studio <em>Valeria Paul</em></span>
+      </a>
+
+      <nav class="nav__links" aria-label="Navigation principale">
+        <a href="#benefices">Bienfaits</a>
+        <a href="#galerie">Avant / Après</a>
+        <a href="#services">Prestations</a>
+        <a href="#studio">Le Studio</a>
+        <a href="#avis">Avis</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a href="#reservation" class="btn btn--nav">Réserver</a>
+
+      <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav__mobile" id="navMobile">
+      <a href="#benefices">Bienfaits</a>
+      <a href="#galerie">Avant / Après</a>
+      <a href="#services">Prestations</a>
+      <a href="#studio">Le Studio</a>
+      <a href="#avis">Avis</a>
+      <a href="#faq">FAQ</a>
+      <a href="#reservation" class="btn btn--primary">Réserver ma consultation</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="eyebrow reveal" data-reveal>
+            <span class="eyebrow__line"></span>
+            Maquillage permanent · Sourcils · Eyeliner · Lèvres
+          </p>
+
+          <h1 class="hero__title reveal" data-reveal data-reveal-delay="1">
+            Révélez votre beauté,<br />
+            <span class="hero__title-accent">naturellement</span> sublimée.
+          </h1>
+
+          <p class="hero__sub reveal" data-reveal data-reveal-delay="2">
+            Un regard défini, des sourcils parfaits, des lèvres fraîches — dès le réveil.
+            Le maquillage permanent sur-mesure, pensé pour votre visage et votre style de vie.
+          </p>
+
+          <div class="hero__cta reveal" data-reveal data-reveal-delay="3">
+            <a href="#reservation" class="btn btn--primary btn--lg">Réserver ma consultation</a>
+            <a href="#galerie" class="btn btn--ghost btn--lg">Voir les résultats</a>
+          </div>
+
+          <ul class="hero__trust reveal" data-reveal data-reveal-delay="4">
+            <li><strong>+1 200</strong><span>clientes conquises</span></li>
+            <li><strong>8 ans</strong><span>d'expérience</span></li>
+            <li><strong>100%</strong><span>hygiène &amp; stérilité</span></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" data-reveal data-reveal-delay="3">
+          <div class="hero__card">
+            <div class="hero__photo hero__photo--1"></div>
+            <div class="hero__badge">
+              <span class="hero__badge-stars">★★★★★</span>
+              <span class="hero__badge-text">Noté 4,9/5 par nos clientes</span>
+            </div>
+          </div>
+          <div class="hero__photo hero__photo--2"></div>
+          <div class="hero__floating hero__floating--1">Résultat naturel</div>
+          <div class="hero__floating hero__floating--2">Certifiée &amp; assurée</div>
+        </div>
+      </div>
+
+      <a href="#benefices" class="hero__scroll" aria-label="Faire défiler">
+        <span></span>Découvrir
+      </a>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Sourcils poudrés</span><span>•</span>
+        <span>Microblading</span><span>•</span>
+        <span>Eyeliner</span><span>•</span>
+        <span>Lèvres aquarelle</span><span>•</span>
+        <span>Résultat naturel</span><span>•</span>
+        <span>Sur-mesure</span><span>•</span>
+        <span>Sourcils poudrés</span><span>•</span>
+        <span>Microblading</span><span>•</span>
+        <span>Eyeliner</span><span>•</span>
+        <span>Lèvres aquarelle</span><span>•</span>
+        <span>Résultat naturel</span><span>•</span>
+        <span>Sur-mesure</span><span>•</span>
+      </div>
+    </div>
+
+    <!-- ===================== BENEFITS ===================== -->
+    <section class="section benefits" id="benefices">
+      <div class="container">
+        <header class="section__head reveal" data-reveal>
+          <p class="section__eyebrow">Pourquoi le maquillage permanent</p>
+          <h2 class="section__title">Le luxe d'être belle, sans effort</h2>
+          <p class="section__lead">
+            Gagnez un temps précieux chaque matin tout en affichant un visage harmonieux,
+            frais et parfaitement défini — du réveil au coucher.
+          </p>
+        </header>
+
+        <div class="benefits__grid">
+          <article class="benefit-card reveal" data-reveal data-reveal-delay="1">
+            <span class="benefit-card__icon">✦</span>
+            <h3>Sourcils parfaits</h3>
+            <p>Une ligne sublimée et naturelle qui structure et illumine instantanément le regard.</p>
+          </article>
+          <article class="benefit-card reveal" data-reveal data-reveal-delay="2">
+            <span class="benefit-card__icon">✦</span>
+            <h3>Regard intensifié</h3>
+            <p>Un eyeliner discret ou affirmé selon vos envies, pour des yeux profonds en toutes circonstances.</p>
+          </article>
+          <article class="benefit-card reveal" data-reveal data-reveal-delay="3">
+            <span class="benefit-card__icon">✦</span>
+            <h3>Lèvres fraîches</h3>
+            <p>Une bouche redessinée, repulpée d'un voile de couleur, pour un effet « bonne mine » permanent.</p>
+          </article>
+          <article class="benefit-card reveal" data-reveal data-reveal-delay="1">
+            <span class="benefit-card__icon">✦</span>
+            <h3>Un temps retrouvé</h3>
+            <p>Plus de retouches au quotidien : vous êtes prête en quelques minutes, où que vous soyez.</p>
+          </article>
+          <article class="benefit-card reveal" data-reveal data-reveal-delay="2">
+            <span class="benefit-card__icon">✦</span>
+            <h3>100% sur-mesure</h3>
+            <p>Forme, couleur et intensité étudiées pour votre morphologie et votre carnation uniques.</p>
+          </article>
+          <article class="benefit-card benefit-card--cta reveal" data-reveal data-reveal-delay="3">
+            <h3>Et si on en parlait&nbsp;?</h3>
+            <p>Une consultation offerte pour définir ensemble le résultat qui vous ressemble.</p>
+            <a href="#reservation" class="link-arrow">Réserver ma consultation →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BEFORE / AFTER ===================== -->
+    <section class="section gallery" id="galerie">
+      <div class="container">
+        <header class="section__head reveal" data-reveal>
+          <p class="section__eyebrow">Avant / Après</p>
+          <h2 class="section__title">Des résultats qui parlent d'eux-mêmes</h2>
+          <p class="section__lead">
+            Glissez le curseur pour découvrir la transformation. Des résultats réels,
+            lumineux et crédibles, sur chacune de nos prestations.
+          </p>
+        </header>
+
+        <div class="ba-tabs reveal" data-reveal>
+          <button class="ba-tab is-active" data-ba="sourcils">Sourcils</button>
+          <button class="ba-tab" data-ba="eyeliner">Eyeliner</button>
+          <button class="ba-tab" data-ba="levres">Lèvres</button>
+        </div>
+
+        <div class="ba reveal" data-reveal id="baSlider" data-active="sourcils">
+          <figure class="ba__frame">
+            <div class="ba__after" id="baAfter">
+              <span class="ba__tag ba__tag--after">Après</span>
+            </div>
+            <div class="ba__before" id="baBefore">
+              <span class="ba__tag ba__tag--before">Avant</span>
+            </div>
+            <button class="ba__handle" id="baHandle" aria-label="Glisser pour comparer">
+              <span class="ba__handle-line"></span>
+              <span class="ba__handle-circle">⟷</span>
+            </button>
+          </figure>
+          <figcaption class="ba__caption" id="baCaption">
+            Sourcils poudrés — effet naturel et structuré
+          </figcaption>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section class="section services" id="services">
+      <div class="container">
+        <header class="section__head reveal" data-reveal>
+          <p class="section__eyebrow">Nos prestations</p>
+          <h2 class="section__title">Trois signatures, une exigence</h2>
+          <p class="section__lead">
+            Chaque prestation débute par une consultation pour comprendre vos attentes
+            et dessiner le résultat idéal.
+          </p>
+        </header>
+
+        <div class="services__grid">
+          <article class="service-card reveal" data-reveal data-reveal-delay="1">
+            <div class="service-card__media service-card__media--brows"></div>
+            <div class="service-card__body">
+              <div class="service-card__head">
+                <h3>PMU Sourcils</h3>
+                <span class="service-card__price">dès 290&nbsp;€</span>
+              </div>
+              <p class="service-card__desc">
+                Microblading ou effet poudré pour des sourcils denses, symétriques et naturels
+                qui structurent harmonieusement le visage.
+              </p>
+              <ul class="service-card__meta">
+                <li><span>Idéal pour</span>Sourcils clairsemés ou irréguliers</li>
+                <li><span>Durée</span>2h00 (retouche incluse)</li>
+                <li><span>Le +</span>Un regard ouvert et reposé</li>
+              </ul>
+              <a href="#reservation" class="btn btn--outline">Réserver les sourcils</a>
+            </div>
+          </article>
+
+          <article class="service-card reveal" data-reveal data-reveal-delay="2">
+            <div class="service-card__media service-card__media--liner"></div>
+            <div class="service-card__body">
+              <div class="service-card__head">
+                <h3>PMU Eyeliner</h3>
+                <span class="service-card__price">dès 250&nbsp;€</span>
+              </div>
+              <p class="service-card__desc">
+                Du trait de cils discret à l'eyeliner graphique : un regard intensifié,
+                parfaitement net, qui ne coule jamais.
+              </p>
+              <ul class="service-card__meta">
+                <li><span>Idéal pour</span>Celles qui veulent un regard défini</li>
+                <li><span>Durée</span>1h30 (retouche incluse)</li>
+                <li><span>Le +</span>Des yeux mis en valeur 24h/24</li>
+              </ul>
+              <a href="#reservation" class="btn btn--outline">Réserver l'eyeliner</a>
+            </div>
+          </article>
+
+          <article class="service-card reveal" data-reveal data-reveal-delay="3">
+            <div class="service-card__media service-card__media--lips"></div>
+            <div class="service-card__body">
+              <div class="service-card__head">
+                <h3>PMU Lèvres</h3>
+                <span class="service-card__price">dès 320&nbsp;€</span>
+              </div>
+              <p class="service-card__desc">
+                Technique aquarelle pour une bouche redessinée, repulpée et lumineuse,
+                avec un voile de couleur d'un naturel saisissant.
+              </p>
+              <ul class="service-card__meta">
+                <li><span>Idéal pour</span>Lèvres pâles ou peu définies</li>
+                <li><span>Durée</span>2h00 (retouche incluse)</li>
+                <li><span>Le +</span>Un effet « bonne mine » permanent</li>
+              </ul>
+              <a href="#reservation" class="btn btn--outline">Réserver les lèvres</a>
+            </div>
+          </article>
+        </div>
+
+        <p class="services__note reveal" data-reveal>
+          La retouche de perfectionnement (4 à 6 semaines) est <strong>incluse</strong> dans chaque prestation.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT / STUDIO ===================== -->
+    <section class="section about" id="studio">
+      <div class="container about__inner">
+        <div class="about__visual reveal" data-reveal>
+          <div class="about__photo"></div>
+          <div class="about__stamp">
+            <span>Depuis</span>
+            <strong>2018</strong>
+          </div>
+        </div>
+
+        <div class="about__content reveal" data-reveal data-reveal-delay="2">
+          <p class="section__eyebrow">Le Studio</p>
+          <h2 class="section__title">L'art de sublimer, avec exigence</h2>
+          <p>
+            Passionnée par la beauté du naturel, <strong>Valeria Paul</strong> dessine depuis plus de
+            huit ans des regards et des visages qui rayonnent. Formée aux techniques les plus
+            avancées du maquillage permanent, elle place chaque cliente au cœur d'une démarche
+            sur-mesure.
+          </p>
+          <p>
+            Dans un studio à l'atmosphère feutrée et raffinée, chaque détail est pensé pour votre
+            confort et votre sérénité — d'une hygiène irréprochable à un accompagnement attentif,
+            avant comme après votre séance.
+          </p>
+
+          <ul class="about__pillars">
+            <li>
+              <span class="about__pillar-icon">⬡</span>
+              <div><strong>Hygiène &amp; stérilité</strong><p>Matériel à usage unique et protocoles stricts.</p></div>
+            </li>
+            <li>
+              <span class="about__pillar-icon">✶</span>
+              <div><strong>Certifiée &amp; formée</strong><p>Formations continues et techniques de pointe.</p></div>
+            </li>
+            <li>
+              <span class="about__pillar-icon">❤</span>
+              <div><strong>À l'écoute</strong><p>Un résultat fidèle à vos envies, jamais standardisé.</p></div>
+            </li>
+          </ul>
+
+          <a href="#reservation" class="btn btn--primary">Rencontrer Valeria</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STATS ===================== -->
+    <section class="stats">
+      <div class="container stats__grid">
+        <div class="stat reveal" data-reveal>
+          <span class="stat__num" data-count="1200" data-suffix="+">0</span>
+          <span class="stat__label">Clientes accompagnées</span>
+        </div>
+        <div class="stat reveal" data-reveal data-reveal-delay="1">
+          <span class="stat__num" data-count="8" data-suffix=" ans">0</span>
+          <span class="stat__label">D'expérience</span>
+        </div>
+        <div class="stat reveal" data-reveal data-reveal-delay="2">
+          <span class="stat__num" data-count="98" data-suffix="%">0</span>
+          <span class="stat__label">De clientes satisfaites</span>
+        </div>
+        <div class="stat reveal" data-reveal data-reveal-delay="3">
+          <span class="stat__num" data-count="4.9" data-suffix="/5" data-decimals="1">0</span>
+          <span class="stat__label">Note moyenne</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section class="section testimonials" id="avis">
+      <div class="container">
+        <header class="section__head reveal" data-reveal>
+          <p class="section__eyebrow">Elles témoignent</p>
+          <h2 class="section__title">La confiance de nos clientes</h2>
+        </header>
+
+        <div class="testimonials__carousel reveal" data-reveal>
+          <div class="testimonials__track" id="testiTrack">
+            <figure class="testimonial">
+              <span class="testimonial__stars">★★★★★</span>
+              <blockquote>« Je me réveille déjà coiffée du regard ! Mes sourcils sont d'un naturel bluffant, personne ne devine que c'est du permanent. Un vrai gain de temps. »</blockquote>
+              <figcaption><strong>Camille L.</strong><span>Sourcils poudrés · Lyon</span></figcaption>
+            </figure>
+            <figure class="testimonial">
+              <span class="testimonial__stars">★★★★★</span>
+              <blockquote>« Accueil chaleureux, hygiène irréprochable et résultat à couper le souffle. Valeria a su exactement comprendre ce que je voulais. »</blockquote>
+              <figcaption><strong>Sophie M.</strong><span>Eyeliner · Paris</span></figcaption>
+            </figure>
+            <figure class="testimonial">
+              <span class="testimonial__stars">★★★★★</span>
+              <blockquote>« Mes lèvres ont enfin du caractère, tout en restant naturelles. Je n'ose plus sortir sans… sauf que maintenant je n'ai plus besoin de rouge à lèvres ! »</blockquote>
+              <figcaption><strong>Inès B.</strong><span>Lèvres aquarelle · Bordeaux</span></figcaption>
+            </figure>
+            <figure class="testimonial">
+              <span class="testimonial__stars">★★★★★</span>
+              <blockquote>« Un travail d'orfèvre. Valeria est à l'écoute, rassurante et perfectionniste. Le résultat dépasse toutes mes attentes, je recommande les yeux fermés. »</blockquote>
+              <figcaption><strong>Marie-Claire D.</strong><span>Sourcils &amp; lèvres · Marseille</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="testimonials__controls">
+            <button class="testimonials__btn" id="testiPrev" aria-label="Avis précédent">‹</button>
+            <div class="testimonials__dots" id="testiDots" aria-hidden="true"></div>
+            <button class="testimonials__btn" id="testiNext" aria-label="Avis suivant">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="section faq" id="faq">
+      <div class="container faq__inner">
+        <header class="section__head section__head--left reveal" data-reveal>
+          <p class="section__eyebrow">Questions fréquentes</p>
+          <h2 class="section__title">Tout ce qu'il faut savoir</h2>
+          <p class="section__lead">
+            Une autre question&nbsp;? Écrivez-nous : nous prenons le temps de tout vous expliquer
+            en consultation.
+          </p>
+          <a href="#reservation" class="btn btn--primary">Poser ma question</a>
+        </header>
+
+        <div class="faq__list reveal" data-reveal>
+          <details class="faq__item">
+            <summary>Combien de temps dure la procédure&nbsp;?</summary>
+            <div class="faq__answer"><p>Comptez entre 1h30 et 2h selon la prestation. Ce temps inclut la consultation, le dessin préalable validé ensemble, puis la réalisation en toute douceur.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Est-ce douloureux&nbsp;?</summary>
+            <div class="faq__answer"><p>L'inconfort reste très léger. Une crème anesthésiante est appliquée pour rendre la séance confortable. La plupart des clientes décrivent de simples picotements.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Combien de temps dure le résultat&nbsp;?</summary>
+            <div class="faq__answer"><p>Le maquillage permanent tient généralement entre 1 et 3 ans, selon la technique, votre type de peau et votre mode de vie. Une retouche annuelle d'entretien permet de raviver l'éclat.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Comment se passe la cicatrisation&nbsp;?</summary>
+            <div class="faq__answer"><p>La cicatrisation dure environ 7 à 10 jours. La couleur s'estompe puis se stabilise. Vous repartez avec une fiche de soins détaillée et un suivi personnalisé.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Qui ne peut pas en bénéficier&nbsp;?</summary>
+            <div class="faq__answer"><p>Le maquillage permanent est déconseillé en cas de grossesse, d'allaitement, de diabète non stabilisé ou de certaines pathologies cutanées. Un échange préalable permet de vérifier votre éligibilité.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary>Une retouche est-elle nécessaire&nbsp;?</summary>
+            <div class="faq__answer"><p>Oui, une retouche de perfectionnement est réalisée 4 à 6 semaines après la séance — elle est <strong>incluse</strong> dans le prix. Elle parfait le résultat et assure une tenue optimale.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BOOKING / CTA ===================== -->
+    <section class="section booking" id="reservation">
+      <div class="booking__glow" aria-hidden="true"></div>
+      <div class="container booking__inner">
+        <div class="booking__intro reveal" data-reveal>
+          <p class="section__eyebrow">Votre consultation</p>
+          <h2 class="section__title">Réservez et découvrez la forme qui vous va</h2>
+          <p class="section__lead">
+            Offrez-vous une consultation personnalisée : ensemble, nous définissons le résultat
+            qui sublimera votre visage, en toute confiance.
+          </p>
+          <ul class="booking__trust">
+            <li>✓ Consultation sans engagement</li>
+            <li>✓ Réponse sous 24h</li>
+            <li>✓ Studio certifié, hygiène garantie</li>
+          </ul>
+        </div>
+
+        <form class="booking__form reveal" data-reveal data-reveal-delay="2" id="bookingForm" novalidate>
+          <div class="field">
+            <label for="name">Nom complet</label>
+            <input type="text" id="name" name="name" placeholder="Votre nom" required />
+          </div>
+          <div class="field">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" name="phone" placeholder="06 00 00 00 00" required />
+          </div>
+          <div class="field">
+            <label for="service">Prestation souhaitée</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Choisissez une prestation</option>
+              <option value="sourcils">PMU Sourcils</option>
+              <option value="eyeliner">PMU Eyeliner</option>
+              <option value="levres">PMU Lèvres</option>
+              <option value="conseil">Je ne sais pas encore — conseillez-moi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message <span>(facultatif)</span></label>
+            <textarea id="message" name="message" rows="3" placeholder="Vos disponibilités, vos attentes…"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg btn--block">Réserver ma consultation</button>
+          <p class="booking__legal">En envoyant ce formulaire, vous acceptez d'être recontactée. Vos données restent confidentielles.</p>
+          <p class="booking__success" id="bookingSuccess" hidden>Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="nav__brand-mark">VP</span>
+        <p class="footer__name">Studio <em>Valeria Paul</em></p>
+        <p class="footer__tag">Maquillage permanent d'exception — sourcils, eyeliner &amp; lèvres.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Liens de pied de page">
+        <a href="#services">Prestations</a>
+        <a href="#galerie">Avant / Après</a>
+        <a href="#faq">FAQ</a>
+        <a href="#reservation">Réserver</a>
+      </nav>
+      <div class="footer__contact">
+        <p>📍 Studio sur rendez-vous · France</p>
+        <p>✉️ <a href="mailto:contact@studiovaleriapaul.com">contact@studiovaleriapaul.com</a></p>
+        <p>📞 <a href="tel:+33600000000">06 00 00 00 00</a></p>
+      </div>
+    </div>
+    <div class="footer__bottom container">
+      <p>© <span id="year"></span> Studio Valeria Paul. Tous droits réservés.</p>
+      <p>Conçu avec soin · Mentions légales · Confidentialité</p>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <a href="#reservation" class="sticky-cta" id="stickyCta">Réserver ma consultation</a>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
