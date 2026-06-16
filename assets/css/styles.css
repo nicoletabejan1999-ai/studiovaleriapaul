@@ -133,6 +133,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .nav__brand { display: flex; align-items: center; gap: 0.7rem; }
+.nav__logo { width: 60px; height: 60px; display: block; border-radius: 50%; filter: drop-shadow(0 3px 10px rgba(44,38,34,0.14)); transition: transform 0.4s var(--ease); }
+.nav__brand:hover .nav__logo { transform: scale(1.04); }
 .nav__brand-mark {
   display: grid; place-items: center;
   width: 42px; height: 42px; border-radius: 50%;
@@ -459,6 +461,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 /* ---------- Footer ---------- */
 .footer { background: var(--ink); color: var(--ivory); padding: clamp(3rem, 6vw, 4.5rem) 0 2rem; }
 .footer__inner { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr; gap: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(250,246,241,0.12); }
+.footer__logo { width: 116px; height: 116px; display: block; margin-bottom: 1.1rem; }
 .footer__name { font-family: var(--serif); font-size: 1.4rem; margin: 0.8rem 0 0.5rem; }
 .footer__name em { color: var(--gold-soft); font-style: italic; }
 .footer__tag { color: rgba(250,246,241,0.65); font-size: 0.92rem; max-width: 30ch; }
@@ -529,6 +532,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
   .footer__inner { grid-template-columns: 1fr; gap: 1.8rem; }
   .sticky-cta { display: block; }
   .hero__photo--2 { width: 42%; }
+  .nav__logo { width: 50px; height: 50px; }
+  .footer__logo { width: 96px; height: 96px; }
   /* Marge basse pour ne pas masquer le contenu sous le CTA fixe */
   body { padding-bottom: 4.5rem; }
 }

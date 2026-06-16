@@ -19,9 +19,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' font-family='serif'%3EV%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='49' fill='%23fff' stroke='%23e3d8cd'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-size='44' font-family='Futura,sans-serif' font-weight='300' fill='%2315110e'%3EVP%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
+  <!-- Logo officiel (vectoriel, réutilisable) -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="brandLogo" viewBox="0 0 300 300">
+      <circle cx="150" cy="150" r="149" fill="#ffffff" stroke="rgba(44,38,34,0.10)" stroke-width="1" />
+      <g fill="#15110e" font-family="'Jost','Century Gothic','Futura',sans-serif" text-anchor="middle">
+        <text x="151" y="126" font-size="29" letter-spacing="13" font-weight="400">STUDIO</text>
+        <text x="151" y="187" font-size="57" letter-spacing="1.5" font-weight="300">VALERIA</text>
+        <text x="151" y="249" font-size="57" letter-spacing="1.5" font-weight="300">PAUL</text>
+      </g>
+    </symbol>
+  </svg>
+
   <!-- Decorative grain / progress -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
@@ -29,8 +41,7 @@
   <header class="nav" id="nav">
     <div class="nav__inner container">
       <a href="#hero" class="nav__brand" aria-label="Studio Valéria Paul — accueil">
-        <span class="nav__brand-mark">VP</span>
-        <span class="nav__brand-text">Studio <em>Valéria Paul</em></span>
+        <svg class="nav__logo" aria-hidden="true" focusable="false"><use href="#brandLogo"></use></svg>
       </a>
 
       <nav class="nav__links" aria-label="Navigation principale">
@@ -509,8 +520,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <span class="nav__brand-mark">VP</span>
-        <p class="footer__name">Studio <em>Valéria Paul</em></p>
+        <svg class="footer__logo" aria-hidden="true" focusable="false"><use href="#brandLogo"></use></svg>
         <p class="footer__tag">Maquillage permanent nouvelle génération — sourcils, regard &amp; lèvres. Depuis 2016.</p>
       </div>
       <nav class="footer__nav" aria-label="Liens de pied de page">

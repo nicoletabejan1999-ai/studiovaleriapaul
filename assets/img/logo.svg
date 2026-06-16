@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="Studio Valeria Paul">
+  <circle cx="150" cy="150" r="149" fill="#ffffff" stroke="rgba(44,38,34,0.10)" stroke-width="1" />
+  <g fill="#15110e" font-family="'Jost','Century Gothic','Futura','Avenir Next',sans-serif" text-anchor="middle">
+    <text x="151" y="126" font-size="29" letter-spacing="13" font-weight="400">STUDIO</text>
+    <text x="151" y="187" font-size="57" letter-spacing="1.5" font-weight="300">VALERIA</text>
+    <text x="151" y="249" font-size="57" letter-spacing="1.5" font-weight="300">PAUL</text>
+  </g>
+</svg>
