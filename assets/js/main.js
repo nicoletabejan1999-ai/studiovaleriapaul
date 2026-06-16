@@ -168,6 +168,20 @@
   var activeTab = document.querySelector(".ba-tab.is-active") || tabs[0];
   if (activeTab) applyBa(activeTab.getAttribute("data-ba"));
 
+  /* ---------- Témoignage vidéo ---------- */
+  var reviewVideo = document.getElementById("reviewVideo");
+  var videoPlayer = document.getElementById("videoPlayer");
+  var videoPlayBtn = document.getElementById("videoPlayBtn");
+  if (reviewVideo && videoPlayer && videoPlayBtn) {
+    videoPlayBtn.addEventListener("click", function () {
+      reviewVideo.play();
+      reviewVideo.setAttribute("controls", "controls");
+    });
+    reviewVideo.addEventListener("play", function () { videoPlayer.classList.add("is-playing"); });
+    reviewVideo.addEventListener("pause", function () { videoPlayer.classList.remove("is-playing"); });
+    reviewVideo.addEventListener("ended", function () { videoPlayer.classList.remove("is-playing"); });
+  }
+
   /* ---------- Carrousel témoignages ---------- */
   var track = document.getElementById("testiTrack");
   var prev = document.getElementById("testiPrev");
