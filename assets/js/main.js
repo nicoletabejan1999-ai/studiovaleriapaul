@@ -238,8 +238,28 @@
   var success = document.getElementById("bookingSuccess");
   if (form) {
     var submitBtn = form.querySelector("button[type=submit]");
+    var defaultBtnLabel = submitBtn ? submitBtn.textContent : "Réserver ma consultation";
+
+    function setMessage(text, type) {
+      if (!success) return;
+      success.hidden = false;
+      success.textContent = text;
+      if (type === "error") {
+        success.style.color = "#c0584f";
+        success.style.background = "rgba(192,88,79,0.1)";
+      } else if (type === "info") {
+        success.style.color = "";
+        success.style.background = "rgba(184,148,102,0.12)";
+      } else {
+        success.style.color = "";
+        success.style.background = "";
+      }
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+
+      // Validation — toujours un retour visible (jamais "rien").
       var valid = true;
       ["name", "phone", "email", "studio"].forEach(function (id) {
         var f = document.getElementById(id);
@@ -248,7 +268,11 @@
         if (f && (empty || badEmail)) { f.classList.add("is-invalid"); valid = false; }
         else if (f) { f.classList.remove("is-invalid"); }
       });
-      if (!valid) return;
+      if (!valid) {
+        setMessage("Merci de renseigner votre nom, téléphone, un e-mail valide et le studio.", "info");
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
 
       var studioSel = document.getElementById("studio");
       var payload = new URLSearchParams({
@@ -262,41 +286,39 @@
 
       submitBtn.disabled = true;
       submitBtn.textContent = "Envoi…";
+      setMessage("Envoi en cours…", "info");
 
       function showSuccess() {
-        // Conversion Meta Pixel
         if (typeof fbq === "function") { fbq("track", "Lead"); }
-        if (success) {
-          success.hidden = false;
-          success.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+        setMessage("Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌", "success");
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
         submitBtn.textContent = "Demande envoyée ✓";
         form.querySelectorAll("input, select, textarea").forEach(function (el) { el.disabled = true; });
       }
       function showError() {
         submitBtn.disabled = false;
-        submitBtn.textContent = "Réessayer";
-        if (success) {
-          success.hidden = false;
-          success.textContent = "Oups, l'envoi a échoué. Vérifiez votre connexion et réessayez, ou contactez-nous directement.";
-          success.style.color = "#c0584f";
-          success.style.background = "rgba(192,88,79,0.1)";
-        }
+        submitBtn.textContent = defaultBtnLabel;
+        setMessage("Oups, l'envoi a échoué. Vérifiez votre connexion et réessayez, ou contactez-nous directement.", "error");
       }
 
       // Envoi vers notre fonction serverless qui relaie au CRM (webhook en variable d'env).
-      fetch(LEAD_ENDPOINT, {
-        method: "POST",
-        keepalive: true,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payload.toString()
-      })
-        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r; })
-        .then(showSuccess)
-        .catch(showError);
+      try {
+        fetch(LEAD_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload.toString()
+        })
+          .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r; })
+          .then(showSuccess)
+          .catch(showError);
+      } catch (err) {
+        showError();
+      }
     });
+
     form.querySelectorAll("input, select").forEach(function (el) {
       el.addEventListener("input", function () { el.classList.remove("is-invalid"); });
+      el.addEventListener("change", function () { el.classList.remove("is-invalid"); });
     });
   }
 })();
