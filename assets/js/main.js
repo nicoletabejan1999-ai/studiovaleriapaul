@@ -13,10 +13,21 @@
   var progress = document.getElementById("scrollProgress");
   var sticky = document.getElementById("stickyCta");
 
+  // Masquer le CTA fixe quand la section réservation est visible (sinon il
+  // recouvre le bouton d'envoi du formulaire et bloque le clic sur mobile).
+  var reservationInView = false;
+  var reservationSection = document.getElementById("reservation");
+  if (reservationSection && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      reservationInView = entries[0].isIntersecting;
+      onScroll();
+    }, { threshold: 0 }).observe(reservationSection);
+  }
+
   function onScroll() {
     var y = window.scrollY || document.documentElement.scrollTop;
     if (nav) nav.classList.toggle("is-scrolled", y > 40);
-    if (sticky) sticky.classList.toggle("is-visible", y > 700);
+    if (sticky) sticky.classList.toggle("is-visible", y > 700 && !reservationInView);
     if (progress) {
       var h = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";

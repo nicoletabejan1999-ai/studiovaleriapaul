@@ -103,7 +103,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 }
 .btn--primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(44, 38, 34, 0.35); }
 .btn--primary::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
   transform: translateX(-120%); transition: transform 0.6s var(--ease);
 }
@@ -191,7 +191,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
     linear-gradient(160deg, var(--ivory), var(--cream));
 }
 .hero__glow {
-  position: absolute; top: -10%; right: -5%; width: 50vw; height: 50vw; z-index: -1;
+  position: absolute; top: -10%; right: -5%; width: 50vw; height: 50vw; z-index: -1; pointer-events: none;
   background: radial-gradient(circle, rgba(201,154,142,0.25), transparent 65%);
   filter: blur(20px); animation: float 14s ease-in-out infinite;
 }
@@ -248,7 +248,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 .hero__badge-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; }
 .hero__badge-text { font-size: 0.7rem; color: var(--ink-soft); max-width: 12ch; }
 .hero__floating {
-  position: absolute; z-index: 5; background: var(--white);
+  position: absolute; z-index: 5; pointer-events: none; background: var(--white);
   padding: 0.55rem 1.1rem; border-radius: 100px; font-size: 0.8rem;
   box-shadow: var(--shadow-sm); letter-spacing: 0.03em; color: var(--ink);
   animation: bob 5s ease-in-out infinite;
@@ -500,7 +500,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 
 /* ---------- Booking ---------- */
 .booking { position: relative; background: linear-gradient(160deg, var(--nude), var(--rose)); overflow: hidden; }
-.booking__glow { position: absolute; top: -20%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 65%); filter: blur(10px); }
+.booking__glow { position: absolute; top: -20%; left: -10%; width: 50vw; height: 50vw; pointer-events: none; background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 65%); filter: blur(10px); }
 .booking__inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
 .booking__intro .section__title { color: var(--ink); }
 .booking__trust { margin-top: 1.8rem; display: flex; flex-direction: column; gap: 0.6rem; }
