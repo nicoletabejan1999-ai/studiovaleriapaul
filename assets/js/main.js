@@ -231,13 +231,16 @@
   }
 
   /* ---------- Formulaire de réservation ---------- */
-  // Le formulaire est envoyé NATIVEMENT vers /api/lead (action/method dans le HTML),
-  // qui relaie au CRM (webhook en variable d'env Vercel) puis renvoie sur /?envoi=ok (même page).
-  // Le JS ne fait qu'une validation visuelle ; il ne bloque pas l'envoi quand tout est OK.
+  // Envoi en AJAX vers /api/lead (en-tête X-Requested-With: fetch → réponse JSON {ok:true},
+  // PAS de redirection). En cas de succès : remerciement affiché sur place + événement Meta
+  // Pixel "Lead". Si le JS est absent, le formulaire reste envoyé NATIVEMENT (action/method
+  // dans le HTML) et retombe sur le retour /?envoi=ok|erreur géré plus bas.
   var form = document.getElementById("bookingForm");
   var success = document.getElementById("bookingSuccess");
   if (form) {
     var submitBtn = form.querySelector("button[type=submit]");
+    var submitLabel = submitBtn ? submitBtn.textContent : "";
+    var leadFired = false;
 
     function setMessage(text, type) {
       if (!success) return;
@@ -247,26 +250,62 @@
       success.style.background = (type === "error") ? "rgba(192,88,79,0.1)" : "rgba(184,148,102,0.12)";
     }
 
-    form.addEventListener("submit", function (e) {
+    // Affiche le remerciement, masque les champs et déclenche l'événement Lead (une seule fois).
+    function showThankYou() {
+      form.querySelectorAll(".field, button[type=submit], .booking__legal").forEach(function (el) {
+        el.style.display = "none";
+      });
+      setMessage("Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌", "success");
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (!leadFired && typeof fbq === "function") { fbq("track", "Lead"); leadFired = true; }
+    }
+
+    function validate() {
       var valid = true;
-      ["name", "phone", "email", "studio"].forEach(function (id) {
-        var f = document.getElementById(id);
-        var empty = f && !f.value.trim();
-        var badEmail = f && id === "email" && f.value.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value.trim());
+      // On référence les champs par leur "name" via form.elements (insensible aux
+      // éventuelles collisions d'id dans la page, ex. une section #studio).
+      ["name", "phone", "email", "studio"].forEach(function (key) {
+        var f = form.elements[key];
+        var val = f ? String(f.value || "").trim() : "";
+        var empty = f && !val;
+        var badEmail = f && key === "email" && val && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
         if (f && (empty || badEmail)) { f.classList.add("is-invalid"); valid = false; }
         else if (f) { f.classList.remove("is-invalid"); }
       });
+      return valid;
+    }
 
-      if (!valid) {
-        e.preventDefault(); // on bloque seulement si invalide
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // l'envoi est géré en AJAX, jamais de redirection
+
+      if (!validate()) {
         setMessage("Merci de renseigner votre nom, téléphone, un e-mail valide et le studio.", "info");
         success.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
-      // Valide → on laisse le navigateur envoyer le formulaire vers /api/lead → /?envoi=ok
-      if (submitBtn) submitBtn.textContent = "Envoi…";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Envoi…"; }
       setMessage("Envoi en cours…", "info");
+
+      fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-Requested-With": "fetch",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams(new FormData(form)).toString()
+      })
+        .then(function (r) {
+          return r.json().catch(function () { return { ok: r.ok }; });
+        })
+        .then(function (data) {
+          if (data && data.ok) { showThankYou(); }
+          else { throw new Error((data && data.error) || "Échec de l'envoi"); }
+        })
+        .catch(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitLabel; }
+          setMessage("Oups, l'envoi a échoué. Réessayez ou contactez-nous directement.", "error");
+        });
     });
 
     form.querySelectorAll("input, select").forEach(function (el) {
@@ -274,10 +313,9 @@
       el.addEventListener("change", function () { el.classList.remove("is-invalid"); });
     });
 
-    // Retour de l'envoi natif (sans JS) : /?envoi=ok|erreur
+    // Filet de sécurité : retour de l'envoi natif (sans JS) via /?envoi=ok|erreur
     if (/[?&]envoi=ok\b/.test(location.search)) {
-      setMessage("Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌", "success");
-      if (typeof fbq === "function") { fbq("track", "Lead"); }
+      showThankYou();
     } else if (/[?&]envoi=erreur\b/.test(location.search)) {
       setMessage("Oups, l'envoi a échoué. Réessayez ou contactez-nous directement.", "error");
     }
