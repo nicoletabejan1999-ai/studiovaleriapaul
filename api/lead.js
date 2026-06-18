@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
     }
 
     if (isAjax) return res.status(200).json({ ok: true });
-    res.writeHead(303, { Location: "/merci.html" });
+    res.writeHead(303, { Location: "/?envoi=ok#reservation" });
     return res.end();
   } catch (e) {
     return fail(500, "Erreur lors de l'envoi");
