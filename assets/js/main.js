@@ -251,6 +251,8 @@
       submitBtn.textContent = "Envoi…";
 
       function showSuccess() {
+        // Conversion Meta Pixel
+        if (typeof fbq === "function") { fbq("track", "Lead"); }
         if (success) {
           success.hidden = false;
           success.scrollIntoView({ behavior: "smooth", block: "center" });
