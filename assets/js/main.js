@@ -251,6 +251,8 @@
       submitBtn.textContent = "Envoi…";
 
       function showSuccess() {
+        // Conversion Meta Pixel
+        if (typeof fbq === "function") { fbq("track", "Lead"); }
         if (success) {
           success.hidden = false;
           success.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -273,6 +275,7 @@
       fetch(WEBHOOK_URL, {
         method: "POST",
         mode: "no-cors",
+        keepalive: true,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString()
       }).then(showSuccess).catch(showError);

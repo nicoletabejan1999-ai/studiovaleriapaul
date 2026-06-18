@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#FAF6F1" />
+
+  <!-- Meta (Facebook) Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1406523847615532');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1406523847615532&ev=PageView&noscript=1" alt="" /></noscript>
+  <!-- End Meta Pixel -->
   <title>Studio Valéria Paul — Maquillage Permanent d'Exception</title>
   <meta name="description" content="Studio de maquillage permanent (sourcils, eyeliner, lèvres). Des résultats naturels, durables et sur-mesure. Réservez votre consultation personnalisée." />
   <meta name="author" content="Studio Valéria Paul" />
@@ -525,17 +542,14 @@
           <div class="field">
             <label for="studio">Studio le plus proche</label>
             <select id="studio" name="studio" required>
-              <option value="" disabled selected>Choisissez un studio</option>
-              <option value="paris">Paris Champs-Élysées</option>
-              <option value="bordeaux">Bordeaux</option>
-              <option value="aix">Aix-en-Provence</option>
-              <option value="marseille">Marseille</option>
-              <option value="nimes">Nîmes</option>
-              <option value="toulouse">Toulouse</option>
-              <option value="tours">Tours</option>
-              <option value="rennes">Rennes</option>
-              <option value="montpellier">Montpellier</option>
-              <option value="guadeloupe">Guadeloupe</option>
+              <option value="" disabled selected>Sélectionnez votre studio…</option>
+              <option value="Paris">Paris</option>
+              <option value="Toulouse">Toulouse</option>
+              <option value="Nîmes">Nîmes</option>
+              <option value="Rennes">Rennes</option>
+              <option value="Aix-en-Provence">Aix-en-Provence</option>
+              <option value="Bordeaux">Bordeaux</option>
+              <option value="Marseille">Marseille</option>
             </select>
           </div>
           <button type="submit" class="btn btn--primary btn--lg btn--block">Réserver ma consultation</button>
