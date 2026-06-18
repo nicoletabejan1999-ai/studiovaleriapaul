@@ -526,7 +526,8 @@
           </ul>
         </div>
 
-        <form class="booking__form reveal" data-reveal data-reveal-delay="2" id="bookingForm" novalidate>
+        <form class="booking__form reveal" data-reveal data-reveal-delay="2" id="bookingForm" action="/api/lead" method="POST" novalidate>
+          <input type="hidden" name="source" value="Landing page Studio Valéria Paul" />
           <div class="field">
             <label for="name">Nom complet</label>
             <input type="text" id="name" name="name" placeholder="Votre nom" required />

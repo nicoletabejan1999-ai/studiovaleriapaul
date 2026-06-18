@@ -3,8 +3,9 @@
 // Configurez l'URL du webhook dans Vercel (et non dans le code) :
 //   Project → Settings → Environment Variables → ZAPIER_WEBHOOK_URL = https://hooks.zapier.com/hooks/catch/.../.../
 //
-// Le formulaire envoie ses données à /api/lead (même origine, pas de CORS),
-// et cette fonction les transmet au webhook côté serveur.
+// Le formulaire poste sur /api/lead (même origine). Deux modes :
+//   - via fetch (en-tête X-Requested-With: fetch) → réponse JSON {ok:true}
+//   - via envoi natif du formulaire (sans JS) → redirection 303 vers la page avec #merci
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
@@ -13,8 +14,16 @@ module.exports = async (req, res) => {
   }
 
   const url = process.env.ZAPIER_WEBHOOK_URL;
+  const isAjax = (req.headers["x-requested-with"] === "fetch");
+
+  function fail(status, message) {
+    if (isAjax) return res.status(status).json({ ok: false, error: message });
+    res.writeHead(303, { Location: "/?envoi=erreur#reservation" });
+    return res.end();
+  }
+
   if (!url) {
-    return res.status(500).json({ ok: false, error: "Webhook non configuré (ZAPIER_WEBHOOK_URL manquant)" });
+    return fail(500, "Webhook non configuré (ZAPIER_WEBHOOK_URL manquant)");
   }
 
   try {
@@ -23,10 +32,18 @@ module.exports = async (req, res) => {
       try { body = Object.fromEntries(new URLSearchParams(body)); } catch (e) { body = {}; }
     }
 
+    // Accepte les noms de champs AJAX (nom/telephone) et natifs (name/phone).
+    const data = {
+      nom: body.nom || body.name || "",
+      telephone: body.telephone || body.phone || "",
+      email: body.email || "",
+      studio: body.studio || "",
+      source: body.source || "Landing page Studio Valéria Paul",
+      date: body.date || new Date().toISOString()
+    };
+
     const params = new URLSearchParams();
-    ["nom", "telephone", "email", "studio", "source", "date"].forEach(function (k) {
-      if (body[k] != null && body[k] !== "") params.append(k, String(body[k]));
-    });
+    Object.keys(data).forEach(function (k) { if (data[k] !== "") params.append(k, String(data[k])); });
 
     const upstream = await fetch(url, {
       method: "POST",
@@ -35,10 +52,13 @@ module.exports = async (req, res) => {
     });
 
     if (!upstream.ok) {
-      return res.status(502).json({ ok: false, error: "Le CRM a renvoyé le statut " + upstream.status });
+      return fail(502, "Le CRM a renvoyé le statut " + upstream.status);
     }
-    return res.status(200).json({ ok: true });
+
+    if (isAjax) return res.status(200).json({ ok: true });
+    res.writeHead(303, { Location: "/?envoi=ok#reservation" });
+    return res.end();
   } catch (e) {
-    return res.status(500).json({ ok: false, error: "Erreur lors de l'envoi" });
+    return fail(500, "Erreur lors de l'envoi");
   }
 };
