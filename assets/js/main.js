@@ -232,7 +232,7 @@
 
   /* ---------- Formulaire de réservation ---------- */
   // Le formulaire est envoyé NATIVEMENT vers /api/lead (action/method dans le HTML),
-  // qui relaie au CRM (webhook en variable d'env Vercel) puis redirige vers /merci.html.
+  // qui relaie au CRM (webhook en variable d'env Vercel) puis renvoie sur /?envoi=ok (même page).
   // Le JS ne fait qu'une validation visuelle ; il ne bloque pas l'envoi quand tout est OK.
   var form = document.getElementById("bookingForm");
   var success = document.getElementById("bookingSuccess");
@@ -264,7 +264,7 @@
         return;
       }
 
-      // Valide → on laisse le navigateur envoyer le formulaire vers /api/lead → /merci.html
+      // Valide → on laisse le navigateur envoyer le formulaire vers /api/lead → /?envoi=ok
       if (submitBtn) submitBtn.textContent = "Envoi…";
       setMessage("Envoi en cours…", "info");
     });
