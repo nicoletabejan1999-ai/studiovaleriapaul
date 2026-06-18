@@ -231,7 +231,9 @@
   }
 
   /* ---------- Formulaire de réservation ---------- */
-  var WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/18421979/43e6uza/";
+  // L'URL du webhook CRM est gérée côté serveur via la variable d'env Vercel
+  // ZAPIER_WEBHOOK_URL (voir api/lead.js). Le client n'appelle que /api/lead.
+  var LEAD_ENDPOINT = "/api/lead";
   var form = document.getElementById("bookingForm");
   var success = document.getElementById("bookingSuccess");
   if (form) {
@@ -282,14 +284,16 @@
         }
       }
 
-      // Envoi vers le CRM (Zapier). mode no-cors : la requête part même sans en-têtes CORS.
-      fetch(WEBHOOK_URL, {
+      // Envoi vers notre fonction serverless qui relaie au CRM (webhook en variable d'env).
+      fetch(LEAD_ENDPOINT, {
         method: "POST",
-        mode: "no-cors",
         keepalive: true,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString()
-      }).then(showSuccess).catch(showError);
+      })
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r; })
+        .then(showSuccess)
+        .catch(showError);
     });
     form.querySelectorAll("input, select").forEach(function (el) {
       el.addEventListener("input", function () { el.classList.remove("is-invalid"); });
