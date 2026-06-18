@@ -275,6 +275,7 @@
       fetch(WEBHOOK_URL, {
         method: "POST",
         mode: "no-cors",
+        keepalive: true,
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload.toString()
       }).then(showSuccess).catch(showError);
