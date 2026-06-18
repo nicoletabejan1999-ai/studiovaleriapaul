@@ -519,20 +519,24 @@
             <input type="tel" id="phone" name="phone" placeholder="06 00 00 00 00" required />
           </div>
           <div class="field">
-            <label for="service">Prestation souhaitée</label>
-            <select id="service" name="service" required>
-              <option value="" disabled selected>Choisissez une prestation</option>
-              <option value="sourcils">PMU Sourcils — dès 190 €</option>
-              <option value="regard">PMU Regard &amp; Eyeliner — dès 149 €</option>
-              <option value="levres">PMU Lèvres — dès 250 €</option>
-              <option value="cils">Extensions de cils</option>
-              <option value="epilation">Épilation définitive</option>
-              <option value="conseil">Je ne sais pas encore — conseillez-moi</option>
-            </select>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="votre@email.com" required />
           </div>
           <div class="field">
-            <label for="message">Message <span>(facultatif)</span></label>
-            <textarea id="message" name="message" rows="3" placeholder="Vos disponibilités, vos attentes…"></textarea>
+            <label for="studio">Studio le plus proche</label>
+            <select id="studio" name="studio" required>
+              <option value="" disabled selected>Choisissez un studio</option>
+              <option value="paris">Paris Champs-Élysées</option>
+              <option value="bordeaux">Bordeaux</option>
+              <option value="aix">Aix-en-Provence</option>
+              <option value="marseille">Marseille</option>
+              <option value="nimes">Nîmes</option>
+              <option value="toulouse">Toulouse</option>
+              <option value="tours">Tours</option>
+              <option value="rennes">Rennes</option>
+              <option value="montpellier">Montpellier</option>
+              <option value="guadeloupe">Guadeloupe</option>
+            </select>
           </div>
           <button type="submit" class="btn btn--primary btn--lg btn--block">Réserver ma consultation</button>
           <p class="booking__legal">En envoyant ce formulaire, vous acceptez d'être recontactée. Vos données restent confidentielles.</p>

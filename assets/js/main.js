@@ -226,9 +226,11 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var valid = true;
-      ["name", "phone", "service"].forEach(function (id) {
+      ["name", "phone", "email", "studio"].forEach(function (id) {
         var f = document.getElementById(id);
-        if (f && !f.value.trim()) { f.classList.add("is-invalid"); valid = false; }
+        var empty = f && !f.value.trim();
+        var badEmail = f && id === "email" && f.value.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value.trim());
+        if (f && (empty || badEmail)) { f.classList.add("is-invalid"); valid = false; }
         else if (f) { f.classList.remove("is-invalid"); }
       });
       if (!valid) return;
