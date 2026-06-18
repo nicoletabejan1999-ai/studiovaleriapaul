@@ -305,7 +305,7 @@
       try {
         fetch(LEAD_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "fetch" },
           body: payload.toString()
         })
           .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r; })
@@ -320,5 +320,13 @@
       el.addEventListener("input", function () { el.classList.remove("is-invalid"); });
       el.addEventListener("change", function () { el.classList.remove("is-invalid"); });
     });
+
+    // Retour de l'envoi natif (sans JS) : /?envoi=ok|erreur
+    if (/[?&]envoi=ok\b/.test(location.search)) {
+      setMessage("Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌", "success");
+      if (typeof fbq === "function") { fbq("track", "Lead"); }
+    } else if (/[?&]envoi=erreur\b/.test(location.search)) {
+      setMessage("Oups, l'envoi a échoué. Réessayez ou contactez-nous directement.", "error");
+    }
   }
 })();
