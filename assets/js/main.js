@@ -231,35 +231,23 @@
   }
 
   /* ---------- Formulaire de réservation ---------- */
-  // L'URL du webhook CRM est gérée côté serveur via la variable d'env Vercel
-  // ZAPIER_WEBHOOK_URL (voir api/lead.js). Le client n'appelle que /api/lead.
-  var LEAD_ENDPOINT = "/api/lead";
+  // Le formulaire est envoyé NATIVEMENT vers /api/lead (action/method dans le HTML),
+  // qui relaie au CRM (webhook en variable d'env Vercel) puis redirige vers /merci.html.
+  // Le JS ne fait qu'une validation visuelle ; il ne bloque pas l'envoi quand tout est OK.
   var form = document.getElementById("bookingForm");
   var success = document.getElementById("bookingSuccess");
   if (form) {
     var submitBtn = form.querySelector("button[type=submit]");
-    var defaultBtnLabel = submitBtn ? submitBtn.textContent : "Réserver ma consultation";
 
     function setMessage(text, type) {
       if (!success) return;
       success.hidden = false;
       success.textContent = text;
-      if (type === "error") {
-        success.style.color = "#c0584f";
-        success.style.background = "rgba(192,88,79,0.1)";
-      } else if (type === "info") {
-        success.style.color = "";
-        success.style.background = "rgba(184,148,102,0.12)";
-      } else {
-        success.style.color = "";
-        success.style.background = "";
-      }
+      success.style.color = (type === "error") ? "#c0584f" : "";
+      success.style.background = (type === "error") ? "rgba(192,88,79,0.1)" : "rgba(184,148,102,0.12)";
     }
 
     form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Validation — toujours un retour visible (jamais "rien").
       var valid = true;
       ["name", "phone", "email", "studio"].forEach(function (id) {
         var f = document.getElementById(id);
@@ -268,52 +256,17 @@
         if (f && (empty || badEmail)) { f.classList.add("is-invalid"); valid = false; }
         else if (f) { f.classList.remove("is-invalid"); }
       });
+
       if (!valid) {
+        e.preventDefault(); // on bloque seulement si invalide
         setMessage("Merci de renseigner votre nom, téléphone, un e-mail valide et le studio.", "info");
         success.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
-      var studioSel = document.getElementById("studio");
-      var payload = new URLSearchParams({
-        nom: document.getElementById("name").value.trim(),
-        telephone: document.getElementById("phone").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        studio: studioSel.options[studioSel.selectedIndex].text,
-        source: "Landing page Studio Valéria Paul",
-        date: new Date().toISOString()
-      });
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Envoi…";
+      // Valide → on laisse le navigateur envoyer le formulaire vers /api/lead → /merci.html
+      if (submitBtn) submitBtn.textContent = "Envoi…";
       setMessage("Envoi en cours…", "info");
-
-      function showSuccess() {
-        if (typeof fbq === "function") { fbq("track", "Lead"); }
-        setMessage("Merci ! Votre demande a bien été envoyée. Nous vous recontactons très vite. 💌", "success");
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
-        submitBtn.textContent = "Demande envoyée ✓";
-        form.querySelectorAll("input, select, textarea").forEach(function (el) { el.disabled = true; });
-      }
-      function showError() {
-        submitBtn.disabled = false;
-        submitBtn.textContent = defaultBtnLabel;
-        setMessage("Oups, l'envoi a échoué. Vérifiez votre connexion et réessayez, ou contactez-nous directement.", "error");
-      }
-
-      // Envoi vers notre fonction serverless qui relaie au CRM (webhook en variable d'env).
-      try {
-        fetch(LEAD_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Requested-With": "fetch" },
-          body: payload.toString()
-        })
-          .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r; })
-          .then(showSuccess)
-          .catch(showError);
-      } catch (err) {
-        showError();
-      }
     });
 
     form.querySelectorAll("input, select").forEach(function (el) {

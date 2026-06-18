@@ -42,6 +42,11 @@ module.exports = async (req, res) => {
       date: body.date || new Date().toISOString()
     };
 
+    // Validation serveur (filet de sécurité, même sans JS)
+    if (!data.nom || !data.telephone || !data.email || !data.studio) {
+      return fail(400, "Champs obligatoires manquants");
+    }
+
     const params = new URLSearchParams();
     Object.keys(data).forEach(function (k) { if (data[k] !== "") params.append(k, String(data[k])); });
 
@@ -56,7 +61,7 @@ module.exports = async (req, res) => {
     }
 
     if (isAjax) return res.status(200).json({ ok: true });
-    res.writeHead(303, { Location: "/?envoi=ok#reservation" });
+    res.writeHead(303, { Location: "/merci.html" });
     return res.end();
   } catch (e) {
     return fail(500, "Erreur lors de l'envoi");
