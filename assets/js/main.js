@@ -220,9 +220,11 @@
   }
 
   /* ---------- Formulaire de réservation ---------- */
+  var WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/18421979/43e6uza/";
   var form = document.getElementById("bookingForm");
   var success = document.getElementById("bookingSuccess");
   if (form) {
+    var submitBtn = form.querySelector("button[type=submit]");
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var valid = true;
@@ -234,13 +236,46 @@
         else if (f) { f.classList.remove("is-invalid"); }
       });
       if (!valid) return;
-      // Démo : pas de back-end. Le studio branchera son outil de réservation ici.
-      if (success) {
-        success.hidden = false;
-        success.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      var studioSel = document.getElementById("studio");
+      var payload = new URLSearchParams({
+        nom: document.getElementById("name").value.trim(),
+        telephone: document.getElementById("phone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        studio: studioSel.options[studioSel.selectedIndex].text,
+        source: "Landing page Studio Valéria Paul",
+        date: new Date().toISOString()
+      });
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoi…";
+
+      function showSuccess() {
+        if (success) {
+          success.hidden = false;
+          success.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        submitBtn.textContent = "Demande envoyée ✓";
+        form.querySelectorAll("input, select, textarea").forEach(function (el) { el.disabled = true; });
       }
-      form.querySelector("button[type=submit]").textContent = "Demande envoyée ✓";
-      form.querySelectorAll("input, select, textarea").forEach(function (el) { el.disabled = true; });
+      function showError() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Réessayer";
+        if (success) {
+          success.hidden = false;
+          success.textContent = "Oups, l'envoi a échoué. Vérifiez votre connexion et réessayez, ou contactez-nous directement.";
+          success.style.color = "#c0584f";
+          success.style.background = "rgba(192,88,79,0.1)";
+        }
+      }
+
+      // Envoi vers le CRM (Zapier). mode no-cors : la requête part même sans en-têtes CORS.
+      fetch(WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString()
+      }).then(showSuccess).catch(showError);
     });
     form.querySelectorAll("input, select").forEach(function (el) {
       el.addEventListener("input", function () { el.classList.remove("is-invalid"); });
