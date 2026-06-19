@@ -1392,6 +1392,14 @@
       .hero{padding:100px 0 40px !important}
       .v3-container{padding:0 16px}
     }
+
+    /* ---------- LENIS SMOOTH SCROLL ---------- */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    /* ---------- GSAP ANIMATION UTILITY ---------- */
+    .will-animate { visibility: hidden; }
   </style>
 </head>
 <body>
@@ -1945,6 +1953,455 @@
       <button type="button" class="cookie-banner__btn cookie-banner__btn--accept" data-cookie="accept">Accepter</button>
     </div>
   </div>
+
+  <!-- Lenis + GSAP -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script>
+  (function () {
+    /* ── Reduced-motion bail-out ── */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.will-animate').forEach(function (el) {
+        el.style.visibility = 'visible';
+      });
+      return;
+    }
+
+    /* ── Lenis smooth scroll ── */
+    var lenis = new Lenis({
+      duration: 1.2,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smooth: true
+    });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    /* ── Register ScrollTrigger ── */
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── Helper: default ScrollTrigger config ── */
+    var stDefaults = { start: 'top 80%', once: true };
+
+    /* ── Helper: simple fade-up ── */
+    function fadeUp(targets, vars) {
+      var v = vars || {};
+      return gsap.from(targets, Object.assign({
+        y: 50, opacity: 0, duration: 0.9, ease: 'power3.out',
+        willChange: 'transform', force3D: true, stagger: 0.1
+      }, v));
+    }
+
+    /* ============================================================
+       HERO — plays on page load (NOT scroll-triggered)
+       ============================================================ */
+    (function heroAnimations() {
+      var tl = gsap.timeline({ delay: 0.2 });
+
+      /* — Eyebrow: clip-path reveal left → right — */
+      var eyebrow = document.querySelector('.hero .eyebrow');
+      if (eyebrow) {
+        gsap.set(eyebrow, { clipPath: 'inset(0 100% 0 0)' });
+        tl.to(eyebrow, {
+          clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power3.inOut',
+          willChange: 'clip-path', force3D: true
+        }, 0);
+      }
+
+      /* — Title: split into words, slide up — */
+      var title = document.querySelector('.hero__title');
+      if (title) {
+        var html = title.innerHTML;
+        /* Wrap text nodes & inline elements as words */
+        var words = html.replace(/<br\s*\/?>/gi, '<br/>').split(/(\s+|<br\s*\/?>)/);
+        var rebuilt = '';
+        words.forEach(function (w) {
+          var trimmed = w.trim();
+          if (!trimmed) { rebuilt += w; return; }
+          if (/^<br\s*\/?>$/i.test(trimmed)) { rebuilt += trimmed; return; }
+          rebuilt += '<span style="display:inline-block;overflow:hidden;vertical-align:top"><span class="hero-word" style="display:inline-block">' + trimmed + '</span></span> ';
+        });
+        title.innerHTML = rebuilt;
+        var wordSpans = title.querySelectorAll('.hero-word');
+        gsap.set(wordSpans, { y: '110%' });
+        tl.to(wordSpans, {
+          y: '0%', duration: 1.2, ease: 'power4.out', stagger: 0.08,
+          willChange: 'transform', force3D: true
+        }, 0.15);
+      }
+
+      /* — Outcome — */
+      var outcome = document.querySelector('.hero__outcome');
+      if (outcome) {
+        gsap.set(outcome, { y: 30, opacity: 0 });
+        tl.to(outcome, {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        }, 0.55);
+      }
+
+      /* — Subtitle — */
+      var sub = document.querySelector('.hero__sub');
+      if (sub) {
+        gsap.set(sub, { y: 30, opacity: 0 });
+        tl.to(sub, {
+          y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        }, 0.75);
+      }
+
+      /* — CTAs: scale + fade, staggered — */
+      var ctas = document.querySelectorAll('.hero__cta .btn');
+      if (ctas.length) {
+        gsap.set(ctas, { scale: 0.85, opacity: 0 });
+        tl.to(ctas, {
+          scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.4)',
+          stagger: 0.12, willChange: 'transform', force3D: true
+        }, 0.9);
+      }
+
+      /* — Trust bar items — */
+      var trustItems = document.querySelectorAll('.hero__trust li');
+      if (trustItems.length) {
+        gsap.set(trustItems, { y: 20, opacity: 0 });
+        tl.to(trustItems, {
+          y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
+          stagger: 0.07, willChange: 'transform', force3D: true
+        }, 1.1);
+      }
+    })();
+
+    /* ============================================================
+       HERO FORM (dark) — ScrollTrigger
+       ============================================================ */
+    (function heroFormAnimations() {
+      var section = document.querySelector('.hero-form');
+      if (!section) return;
+
+      var sTitle = section.querySelector('.section__title');
+      if (sTitle) {
+        gsap.from(sTitle, {
+          scrollTrigger: Object.assign({ trigger: sTitle }, stDefaults),
+          y: 60, opacity: 0, duration: 0.9, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      var fields = section.querySelectorAll('.field');
+      if (fields.length) {
+        gsap.from(fields, {
+          scrollTrigger: Object.assign({ trigger: fields[0] }, stDefaults),
+          y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+          stagger: 0.12, willChange: 'transform', force3D: true
+        });
+      }
+
+      var submitBtn = section.querySelector('.btn--primary');
+      if (submitBtn) {
+        gsap.from(submitBtn, {
+          scrollTrigger: Object.assign({ trigger: submitBtn }, stDefaults),
+          scale: 0.9, opacity: 0, duration: 0.7, ease: 'back.out(1.4)',
+          delay: fields.length * 0.12 + 0.15,
+          willChange: 'transform', force3D: true
+        });
+      }
+    })();
+
+    /* ============================================================
+       BENEFITS
+       ============================================================ */
+    (function benefitsAnimations() {
+      var section = document.querySelector('.benefits');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var items = section.querySelectorAll('.benefits__fascinations li');
+      if (items.length) {
+        gsap.from(items, {
+          scrollTrigger: Object.assign({ trigger: items[0] }, stDefaults),
+          x: -60, opacity: 0, duration: 0.7, ease: 'power3.out',
+          stagger: 0.15, willChange: 'transform', force3D: true
+        });
+      }
+
+      var close = section.querySelector('.benefits__close');
+      if (close) {
+        fadeUp(close, {
+          scrollTrigger: Object.assign({ trigger: close }, stDefaults),
+          delay: 0.3
+        });
+      }
+    })();
+
+    /* ============================================================
+       GALLERY (dark)
+       ============================================================ */
+    (function galleryAnimations() {
+      var section = document.querySelector('.gallery');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var tabs = section.querySelectorAll('.ba-tab');
+      if (tabs.length) {
+        gsap.from(tabs, {
+          scrollTrigger: Object.assign({ trigger: tabs[0] }, stDefaults),
+          opacity: 0, duration: 0.5, ease: 'power2.out',
+          stagger: 0.1, willChange: 'transform', force3D: true
+        });
+      }
+
+      var slider = document.getElementById('baSlider');
+      if (slider) {
+        gsap.from(slider, {
+          scrollTrigger: Object.assign({ trigger: slider }, stDefaults),
+          scale: 0.8, rotation: -2, opacity: 0, duration: 1.2,
+          ease: 'power3.out', willChange: 'transform', force3D: true
+        });
+      }
+
+      var disclaimer = section.querySelector('.gallery__disclaimer');
+      if (disclaimer) {
+        fadeUp(disclaimer, { scrollTrigger: Object.assign({ trigger: disclaimer }, stDefaults) });
+      }
+    })();
+
+    /* ============================================================
+       CONTRARIAN
+       ============================================================ */
+    (function contrarianAnimations() {
+      var section = document.querySelector('.contrarian');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var grid = section.querySelector('.contrarian__grid');
+      if (grid) {
+        var cols = grid.children;
+        if (cols.length >= 2) {
+          var trig = { scrollTrigger: Object.assign({ trigger: grid }, stDefaults) };
+          gsap.from(cols[0], Object.assign({}, trig, {
+            x: -80, opacity: 0, duration: 1, ease: 'power3.out',
+            willChange: 'transform', force3D: true
+          }));
+          gsap.from(cols[1], Object.assign({}, trig, {
+            x: 80, opacity: 0, duration: 1, ease: 'power3.out',
+            willChange: 'transform', force3D: true
+          }));
+        }
+      }
+    })();
+
+    /* ============================================================
+       TESTIMONIALS (dark)
+       ============================================================ */
+    (function testimonialsAnimations() {
+      var section = document.querySelector('.testimonials');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var videoReview = section.querySelector('.video-review');
+      if (videoReview) {
+        gsap.from(videoReview, {
+          scrollTrigger: Object.assign({ trigger: videoReview }, stDefaults),
+          scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      var cards = section.querySelectorAll('.testimonial');
+      if (cards.length) {
+        gsap.from(cards, {
+          scrollTrigger: Object.assign({ trigger: cards[0] }, stDefaults),
+          y: 30, opacity: 0, rotation: 3, duration: 0.7,
+          ease: 'power3.out', stagger: 0.1,
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      var experts = section.querySelector('.testimonials__experts');
+      if (experts) {
+        fadeUp(experts, { scrollTrigger: Object.assign({ trigger: experts }, stDefaults) });
+      }
+    })();
+
+    /* ============================================================
+       BOOKING
+       ============================================================ */
+    (function bookingAnimations() {
+      var section = document.querySelector('.booking');
+      if (!section) return;
+
+      var intro = section.querySelector('.booking__intro');
+      if (intro) {
+        var introTitle = intro.querySelector('.section__title');
+        var introLead = intro.querySelector('.section__lead');
+        if (introTitle) fadeUp(introTitle, { scrollTrigger: Object.assign({ trigger: introTitle }, stDefaults) });
+        if (introLead) fadeUp(introLead, { scrollTrigger: Object.assign({ trigger: introLead }, stDefaults), delay: 0.15 });
+      }
+
+      var trustItems = section.querySelectorAll('.booking__trust li');
+      if (trustItems.length) {
+        gsap.from(trustItems, {
+          scrollTrigger: Object.assign({ trigger: trustItems[0] }, stDefaults),
+          x: 40, opacity: 0, duration: 0.6, ease: 'power3.out',
+          stagger: 0.1, willChange: 'transform', force3D: true
+        });
+      }
+
+      var fields = section.querySelectorAll('.booking__form .field');
+      if (fields.length) {
+        gsap.from(fields, {
+          scrollTrigger: Object.assign({ trigger: fields[0] }, stDefaults),
+          y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+          stagger: 0.12, willChange: 'transform', force3D: true
+        });
+      }
+    })();
+
+    /* ============================================================
+       SERVICES
+       ============================================================ */
+    (function servicesAnimations() {
+      var section = document.querySelector('.services');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var cards = section.querySelectorAll('.service-card');
+      if (cards.length) {
+        gsap.set(section.querySelector('.services__grid'), { perspective: 1200 });
+        gsap.from(cards, {
+          scrollTrigger: Object.assign({ trigger: cards[0] }, stDefaults),
+          rotationY: 8, rotationX: 4, y: 60, opacity: 0, scale: 0.95,
+          duration: 1, ease: 'power3.out', stagger: 0.2,
+          transformPerspective: 1200,
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      var notes = section.querySelectorAll('.services__note, .services__more');
+      if (notes.length) {
+        fadeUp(notes, { scrollTrigger: Object.assign({ trigger: notes[0] }, stDefaults) });
+      }
+    })();
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    (function aboutAnimations() {
+      var section = document.querySelector('.about');
+      if (!section) return;
+
+      /* Parallax on photo */
+      var visual = section.querySelector('.about__visual');
+      if (visual) {
+        gsap.fromTo(visual, { y: -80 }, {
+          y: 80, ease: 'none',
+          scrollTrigger: {
+            trigger: section, start: 'top bottom', end: 'bottom top',
+            scrub: 0.7
+          },
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      /* Content slides in from right */
+      var content = section.querySelector('.about__content');
+      if (content) {
+        gsap.from(content, {
+          scrollTrigger: Object.assign({ trigger: content }, stDefaults),
+          x: 60, opacity: 0, duration: 1, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      /* Pillars stagger up */
+      var pillars = section.querySelectorAll('.about__pillars li');
+      if (pillars.length) {
+        gsap.from(pillars, {
+          scrollTrigger: Object.assign({ trigger: pillars[0] }, stDefaults),
+          y: 40, opacity: 0, duration: 0.7, ease: 'power3.out',
+          stagger: 0.15, willChange: 'transform', force3D: true
+        });
+      }
+    })();
+
+    /* ============================================================
+       FAQ
+       ============================================================ */
+    (function faqAnimations() {
+      var section = document.querySelector('.faq');
+      if (!section) return;
+
+      var head = section.querySelector('.section__head');
+      if (head) {
+        fadeUp(head, { scrollTrigger: Object.assign({ trigger: head }, stDefaults) });
+      }
+
+      var items = section.querySelectorAll('.faq__item');
+      if (items.length) {
+        gsap.from(items, {
+          scrollTrigger: Object.assign({ trigger: items[0] }, stDefaults),
+          y: -30, opacity: 0, duration: 0.6, ease: 'back.out(1.4)',
+          stagger: 0.1, willChange: 'transform', force3D: true
+        });
+      }
+    })();
+
+    /* ============================================================
+       FINAL CTA
+       ============================================================ */
+    (function finalCtaAnimations() {
+      var section = document.querySelector('.final-cta');
+      if (!section) return;
+
+      var heading = section.querySelector('.section__title');
+      if (heading) {
+        gsap.from(heading, {
+          scrollTrigger: Object.assign({ trigger: heading }, stDefaults),
+          scale: 1.15, opacity: 0, duration: 1, ease: 'power3.out',
+          willChange: 'transform', force3D: true
+        });
+      }
+
+      var btn = section.querySelector('.btn--primary');
+      if (btn) {
+        var btnTl = gsap.timeline({
+          scrollTrigger: Object.assign({ trigger: btn }, stDefaults)
+        });
+        btnTl.from(btn, {
+          y: 30, opacity: 0, duration: 0.7, ease: 'power3.out',
+          delay: 0.3, willChange: 'transform', force3D: true
+        });
+        btnTl.to(btn, {
+          scale: 1.05, duration: 0.35, ease: 'power2.inOut',
+          yoyo: true, repeat: 1
+        });
+      }
+    })();
+
+  })();
+  </script>
 
   <!-- Hero form handler -->
   <script>
