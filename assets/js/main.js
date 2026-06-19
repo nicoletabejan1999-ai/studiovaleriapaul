@@ -321,3 +321,21 @@
     }
   }
 })();
+
+/* ---------- Bandeau cookies (informatif) ---------- */
+// Bandeau purement visuel : il se masque au clic et mémorise le choix
+// (localStorage) pour ne plus réapparaître. Aucune gestion réelle de cookies.
+(function () {
+  var banner = document.getElementById("cookieBanner");
+  if (!banner) return;
+  try { if (localStorage.getItem("cookieConsent")) return; } catch (e) {}
+  banner.hidden = false;
+  requestAnimationFrame(function () { banner.classList.add("is-visible"); });
+  banner.querySelectorAll("[data-cookie]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      try { localStorage.setItem("cookieConsent", btn.getAttribute("data-cookie")); } catch (e) {}
+      banner.classList.remove("is-visible");
+      setTimeout(function () { banner.hidden = true; }, 350);
+    });
+  });
+})();
