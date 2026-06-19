@@ -135,35 +135,7 @@
   <!-- Decorative grain / progress -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- ===================== NAVIGATION ===================== -->
-  <header class="nav" id="nav">
-    <div class="nav__inner container">
-      <a href="#hero" class="nav__brand" aria-label="Studio Val&eacute;ria Paul &mdash; accueil">
-        <svg class="nav__logo" aria-hidden="true" focusable="false"><use href="#brandLogo"></use></svg>
-      </a>
-
-      <nav class="nav__links" aria-label="Navigation principale">
-        <a href="#galerie">R&eacute;sultats</a>
-        <a href="#services">Prestations</a>
-        <a href="#avis">Avis</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-
-      <a href="#reservation" class="btn btn--nav">R&eacute;server ma consultation</a>
-
-      <button class="nav__burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-    <div class="nav__mobile" id="navMobile">
-      <a href="#galerie">R&eacute;sultats</a>
-      <a href="#services">Prestations</a>
-      <a href="#avis">Avis</a>
-      <a href="#faq">FAQ</a>
-      <a href="#reservation" class="btn btn--primary">R&eacute;server ma consultation</a>
-    </div>
-  </header>
+  <!-- Nav removed in v2 — cleaner focus on content -->
 
   <main>
     <!-- ===================== HERO ===================== -->
@@ -734,5 +706,15 @@
   </script>
 
   <script src="assets/js/main.js" defer></script>
+  <script>
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    var target = document.getElementById(id);
+    if (target) { e.preventDefault(); target.scrollIntoView({behavior: 'smooth'}); }
+  });
+  </script>
 </body>
 </html>
