@@ -1400,6 +1400,13 @@
 
     /* ---------- GSAP ANIMATION UTILITY ---------- */
     .will-animate { visibility: hidden; }
+
+    /* ---------- OVERRIDE parent reveal system — GSAP handles animations now ---------- */
+    .reveal, .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
   </style>
 </head>
 <body>
